@@ -43,11 +43,7 @@ btnRoll.addEventListener('click', function () {
       `current--${activePlayer}`
     ).textContent = currentScore;
   } else {
-    document.getElementById(`current--${activePlayer}`).textContent = 0;
-    currentScore = 0;
-    activePlayer = activePlayer === 0 ? 1 : 0;
-    player0El.classList.toggle('player--active');
-    player1El.classList.toggle('player--active');
+    switchPlayer();
     // switch to next player
     // score = current
     // change colors on both
@@ -57,10 +53,22 @@ btnRoll.addEventListener('click', function () {
 
 btnHold.addEventListener('click', function () {
   // 1. add current points to players score
+
   scores[activePlayer] += currentScore;
-  document.getElementById(`current--${activePlayer}`).textContent =
+  console.log(scores[activePlayer]);
+  document.getElementById(`score--${activePlayer}`).textContent =
     scores[activePlayer];
   // check if players score = 100
+  if (scores[activePlayer] >= 20) {
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.add('player--winner');
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.remove('player--active');
+  } else {
+    switchPlayer();
+  }
   // finish game
   // change to next player
 });
